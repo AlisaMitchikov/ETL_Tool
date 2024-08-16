@@ -2,7 +2,7 @@ import pyodbc
 import pandas as pd
 
 
-def OPR_to_ODS(OPR_to_ODS_tables_list,source_conn,target_conn):
+def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,source_conn,target_conn):
 
     # # Create connections to servers
     # source_conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
@@ -15,7 +15,7 @@ def OPR_to_ODS(OPR_to_ODS_tables_list,source_conn,target_conn):
     #                             'DATABASE=Northwind - DWH;'
     #                             'Trusted_Connection=yes;')    
     
-    for item in OPR_to_ODS_tables_list:
+    for item in OPR_to_ODS_tables_list_SQL:
 
         # Source table
         source_table_name = item 
@@ -77,7 +77,7 @@ def DWH(DWH_queries_dict,target_conn):
 
 
 
-def ETL(OPR_to_ODS_tables_list,DWH_queries_dict):
+def ETL(OPR_to_ODS_tables_list_SQL,DWH_queries_dict):
 
     # Create connections to servers
     source_conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
@@ -90,7 +90,7 @@ def ETL(OPR_to_ODS_tables_list,DWH_queries_dict):
                                 'DATABASE=Northwind - DWH;'
                                 'Trusted_Connection=yes;')   
     
-    OPR_to_ODS(OPR_to_ODS_tables_list,source_conn,target_conn)
+    OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,source_conn,target_conn)
 
     DWH(DWH_queries_dict,target_conn)
 
@@ -100,4 +100,9 @@ def ETL(OPR_to_ODS_tables_list,DWH_queries_dict):
 
 
 
+def OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV):
     
+    for item in OPR_to_ODS_tables_list_CSV:
+        file_path = item
+        df = pd.read_csv(file_path)
+        print(df) 
