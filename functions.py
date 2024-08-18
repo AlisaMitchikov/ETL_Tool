@@ -49,6 +49,31 @@ def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,source_conn,target_conn):
     # target_conn.close()        
 
 
+def OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV,target_conn):
+
+    for key,value in OPR_to_ODS_tables_list_CSV.items():
+        
+        file_path = value
+        df = pd.read_csv(file_path)
+        print(df) 
+    
+    
+        # create cursor
+        cursor = target_conn.cursor()        
+
+        # Truncate ODS table
+        query = f"truncate table [{key}]"
+        cursor.execute(query)
+
+        # Write data to the target database
+        for index, row in df.iterrows():
+            cursor.execute(
+                f"INSERT INTO {key} ({', '.join(df.columns)}) VALUES ({', '.join(['?' for _ in df.columns])})",
+                tuple(row)
+            )
+        
+        target_conn.commit()
+
 
 def DWH(DWH_queries_dict,target_conn):
 
@@ -75,9 +100,9 @@ def DWH(DWH_queries_dict,target_conn):
     # # Close connections
     # target_conn.close()        
 
+# ---------------------------------------------------------------------------------
 
-
-def ETL(OPR_to_ODS_tables_list_SQL,DWH_queries_dict):
+def ETL(OPR_to_ODS_tables_list_SQL,OPR_to_ODS_tables_list_CSV,DWH_queries_dict):
 
     # Create connections to servers
     source_conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
@@ -92,6 +117,8 @@ def ETL(OPR_to_ODS_tables_list_SQL,DWH_queries_dict):
     
     OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,source_conn,target_conn)
 
+    OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV,target_conn)
+
     DWH(DWH_queries_dict,target_conn)
 
     # Close connections
@@ -100,9 +127,3 @@ def ETL(OPR_to_ODS_tables_list_SQL,DWH_queries_dict):
 
 
 
-def OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV):
-    
-    for item in OPR_to_ODS_tables_list_CSV:
-        file_path = item
-        df = pd.read_csv(file_path)
-        print(df) 

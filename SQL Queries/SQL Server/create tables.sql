@@ -78,7 +78,15 @@ SELECT
 FROM [Northwind - DWH].[dbo].[ODS_Orders]
 ;
 
-
+--[Region]
+drop table [Northwind - DWH].[dbo].[ODS_Region];
+CREATE TABLE [Northwind - DWH].[dbo].[ODS_Region](
+	[RegionID] [varchar](10) ,
+	[RegionDescription] [varchar](10) 
+)
+;
+select * from [Northwind - DWH].[dbo].[ODS_Region];
+truncate table [Northwind - DWH].[dbo].[ODS_Region];
 
 ----------------------------------------------------------------------
 
@@ -92,6 +100,8 @@ CREATE TABLE [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs]
 	[#_orders] [int]
 )
 ;
+truncate table [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs];
+select * from [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs];
 
 ----------------------------------------------------------------------
 
@@ -105,6 +115,15 @@ CREATE TABLE [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs]
 	[#_orders] [int]
 )
 ;
+truncate table [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs];
+select * from [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs];
 
 
+-------------
 
+create table [Northwind - DWH].[dbo].[bla]
+(
+RegionID varchar(10),
+RegionDescription varchar(10)
+)
+;
