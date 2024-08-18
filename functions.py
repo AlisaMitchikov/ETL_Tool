@@ -1,6 +1,6 @@
 import pyodbc
 import pandas as pd
-
+import requests
 
 def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,source_conn,target_conn):
 
@@ -55,8 +55,6 @@ def OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV,target_conn):
         
         file_path = value
         df = pd.read_csv(file_path)
-        print(df) 
-    
     
         # create cursor
         cursor = target_conn.cursor()        
@@ -73,6 +71,28 @@ def OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV,target_conn):
             )
         
         target_conn.commit()
+
+
+def OPR_to_ODS_API(OPR_to_ODS_tables_list_API,target_conn):
+
+    for key,value in OPR_to_ODS_tables_list_API.items():
+
+        response = requests.get(value)
+        data = response.json()
+        df = pd.DataFrame(data)
+        df['index1'] = df.index
+
+    # create cursor
+    cursor = target_conn.cursor()        
+
+    # Write data to the target database
+    for index, row in df.iterrows():
+        cursor.execute(
+            f"INSERT INTO ODS_Exchange_Rate ({', '.join(df.columns)}) VALUES ({', '.join(['?' for _ in df.columns])})",
+            tuple(row)
+        )
+
+    target_conn.commit()
 
 
 def DWH(DWH_queries_dict,target_conn):
@@ -102,7 +122,7 @@ def DWH(DWH_queries_dict,target_conn):
 
 # ---------------------------------------------------------------------------------
 
-def ETL(OPR_to_ODS_tables_list_SQL,OPR_to_ODS_tables_list_CSV,DWH_queries_dict):
+def ETL(OPR_to_ODS_tables_list_SQL,OPR_to_ODS_tables_list_CSV,OPR_to_ODS_tables_list_API,DWH_queries_dict):
 
     # Create connections to servers
     source_conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
@@ -118,6 +138,8 @@ def ETL(OPR_to_ODS_tables_list_SQL,OPR_to_ODS_tables_list_CSV,DWH_queries_dict):
     OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,source_conn,target_conn)
 
     OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV,target_conn)
+
+    OPR_to_ODS_API(OPR_to_ODS_tables_list_API,target_conn)
 
     DWH(DWH_queries_dict,target_conn)
 

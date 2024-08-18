@@ -7,6 +7,9 @@ OPR_to_ODS_tables_list_SQL = ['Customers', 'Orders']
 # OPR CSV
 OPR_to_ODS_tables_list_CSV = {'ODS_Region':r"E:\קריירה\הכנה 2024\פרוייקטים\etl pipeline\app\sources\CSV\Region.csv"}
 
+# API
+OPR_to_ODS_tables_list_API = {'ODS_Exchange_Rate':r'https://v6.exchangerate-api.com/v6/12566f6fc3a965b80afd4734/latest/USD'}
+
 # ETL queries
 DWH_queries_dict = {
     'truncate STG' : """truncate table [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs];""",
@@ -30,13 +33,12 @@ DWH_queries_dict = {
 }
 
 # ETL proccess
-ETL(OPR_to_ODS_tables_list_SQL,OPR_to_ODS_tables_list_CSV,DWH_queries_dict)
+ETL(OPR_to_ODS_tables_list_SQL,OPR_to_ODS_tables_list_CSV,OPR_to_ODS_tables_list_API,DWH_queries_dict)
+
+
 
 
 
 # OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV)
-
-
-
 # OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL)
 # DWH(DWH_queries_dict)

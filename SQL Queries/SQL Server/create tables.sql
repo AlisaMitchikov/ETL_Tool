@@ -88,6 +88,28 @@ CREATE TABLE [Northwind - DWH].[dbo].[ODS_Region](
 select * from [Northwind - DWH].[dbo].[ODS_Region];
 truncate table [Northwind - DWH].[dbo].[ODS_Region];
 
+
+
+-- [Exchange Rate]
+CREATE TABLE [Northwind - DWH].[dbo].[ODS_Exchange_Rate](
+--	[index] varchar(100),
+	[result] varchar(100),
+	[documentation] varchar(100),
+	[terms_of_use] varchar(100),
+	[time_last_update_unix] varchar(100),
+	[time_last_update_utc] varchar(100),
+	[time_next_update_unix] varchar(100),
+	[time_next_update_utc] varchar(100),
+	[base_code] varchar(100),
+	[conversion_rates] varchar(100),
+	[index1] varchar(100)
+	)
+	;
+drop table [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
+select * from [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
+
+
+
 ----------------------------------------------------------------------
 
 -- STG --
