@@ -107,8 +107,45 @@ CREATE TABLE [Northwind - DWH].[dbo].[ODS_Exchange_Rate](
 	;
 drop table [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
 select * from [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
+truncate table [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
 
+ -- [products]
+ CREATE TABLE [dbo].[ODS_Products](
+	[ProductID] [int],
+	[ProductName] [nvarchar](40) ,
+	[SupplierID] [int] ,
+	[CategoryID] [int] ,
+	[QuantityPerUnit] [nvarchar](20) ,
+	[UnitPrice] [money] ,
+	[UnitsInStock] [smallint] ,
+	[UnitsOnOrder] [smallint] ,
+	[ReorderLevel] [smallint] ,
+	[Discontinued] [bit]  
+)
+;
+drop table [Northwind - DWH].[dbo].[ODS_Products];
+select * from [Northwind - DWH].[dbo].[ODS_Products];
+truncate table [Northwind - DWH].[dbo].[ODS_Products];
 
+ -- [suppliers]
+ CREATE TABLE [dbo].[ODS_Suppliers](
+	[SupplierID] [int]  ,
+	[CompanyName] [nvarchar](40)  ,
+	[ContactName] [nvarchar](30) ,
+	[ContactTitle] [nvarchar](30) ,
+	[Address] [nvarchar](60) ,
+	[City] [nvarchar](15) ,
+	[Region] [nvarchar](15) ,
+	[PostalCode] [nvarchar](10) ,
+	[Country] [nvarchar](15) ,
+	[Phone] [nvarchar](24) ,
+	[Fax] [nvarchar](24) ,
+	[HomePage] [ntext] 
+	)
+	;
+drop table [Northwind - DWH].[dbo].[ODS_Suppliers];
+select * from [Northwind - DWH].[dbo].[ODS_Suppliers];
+truncate table [Northwind - DWH].[dbo].[ODS_Suppliers];
 
 ----------------------------------------------------------------------
 
@@ -124,6 +161,7 @@ CREATE TABLE [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs]
 ;
 truncate table [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs];
 select * from [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs];
+drop table [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs];
 
 ----------------------------------------------------------------------
 
@@ -139,13 +177,7 @@ CREATE TABLE [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs]
 ;
 truncate table [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs];
 select * from [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs];
-
+drop table [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs];
 
 -------------
 
-create table [Northwind - DWH].[dbo].[bla]
-(
-RegionID varchar(10),
-RegionDescription varchar(10)
-)
-;

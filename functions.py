@@ -13,22 +13,26 @@ def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn):
 
         # Target table
         target_table_name = 'ODS_'+item
+        print(target_table_name)
 
         # create cursor
         cursor = target_conn.cursor()
 
         # Truncate ODS table
         query = f"truncate table [{target_table_name}]"
+        print(query)
         cursor.execute(query)
 
         # Read tables data from the source database
         query = f"SELECT * FROM [{source_table_name}]"
+        print(query)
         data = pd.read_sql(query, SQL_source_conn)
+        print(data)
 
         # Write data to the target database
         for index, row in data.iterrows():
             cursor.execute(
-                f"INSERT INTO {target_table_name} ({', '.join(data.columns)}) VALUES ({', '.join(['?' for _ in data.columns])})",
+                f"INSERT INTO [{target_table_name}] ({', '.join(data.columns)}) VALUES ({', '.join(['?' for _ in data.columns])})",
                 tuple(row)
             )
         
@@ -151,15 +155,20 @@ def ETL(OPR_to_ODS_tables_list_SQL,OPR_to_ODS_tables_list_MySQL,OPR_to_ODS_table
                                 'DATABASE=Northwind - DWH;'
                                 'Trusted_Connection=yes;')   
     
-    OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn)
+    if len(OPR_to_ODS_tables_list_SQL) > 0:
+        OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn)
 
-    OPR_to_ODS_MySQL(OPR_to_ODS_tables_list_MySQL,MySQL_source_con,target_conn)
+    if len(OPR_to_ODS_tables_list_MySQL) > 0:
+        OPR_to_ODS_MySQL(OPR_to_ODS_tables_list_MySQL,MySQL_source_con,target_conn)
 
-    OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV,target_conn)
+    if len(OPR_to_ODS_tables_list_CSV) > 0:
+        OPR_to_ODS_CSV(OPR_to_ODS_tables_list_CSV,target_conn)
 
-    OPR_to_ODS_API(OPR_to_ODS_tables_list_API,target_conn)
+    if len(OPR_to_ODS_tables_list_API) > 0:
+        OPR_to_ODS_API(OPR_to_ODS_tables_list_API,target_conn)
 
-    DWH(DWH_queries_dict,target_conn)
+    if len(DWH_queries_dict) > 0:
+        DWH(DWH_queries_dict,target_conn)
 
     # Close connections
     SQL_source_conn.close()
