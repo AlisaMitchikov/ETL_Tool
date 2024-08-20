@@ -2,7 +2,7 @@ import pyodbc
 import pandas as pd
 import requests
 import mysql.connector 
-
+import numpy as np
 
 def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn):
  
@@ -13,24 +13,24 @@ def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn):
 
         # Target table
         target_table_name = 'ODS_'+item
-        print(target_table_name)
 
         # create cursor
         cursor = target_conn.cursor()
 
         # Truncate ODS table
         query = f"truncate table [{target_table_name}]"
-        print(query)
         cursor.execute(query)
 
         # Read tables data from the source database
         query = f"SELECT * FROM [{source_table_name}]"
-        print(query)
         data = pd.read_sql(query, SQL_source_conn)
-        print(data)
+        for col in data:
+            if data[col].dtype.name == 'float64':
+               data[col] = data[col].fillna(-1) 
 
         # Write data to the target database
         for index, row in data.iterrows():
+            row.replace("",0)
             cursor.execute(
                 f"INSERT INTO [{target_table_name}] ({', '.join(data.columns)}) VALUES ({', '.join(['?' for _ in data.columns])})",
                 tuple(row)
