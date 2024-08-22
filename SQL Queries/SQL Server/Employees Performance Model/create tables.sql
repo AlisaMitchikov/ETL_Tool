@@ -1,12 +1,33 @@
 use [Northwind - DWH]																		
 											-- create tables --
-									-----------------------------
-truncate table [ODS_Order Details]
--- orders, order details, employees, exchange, products			
+									  -----------------------------
 
+------------------------------------------------ ODS ------------------------------------------------
+-----------------------------------------------------------------------------------------------------
 
--- ODS --
----------
+select 
+	   o.[OrderID]
+      ,[CustomerID]
+      ,[EmployeeID]
+      ,[OrderDate]
+      ,[RequiredDate]
+      ,[ShippedDate]
+      ,[ShipVia]
+      ,[Freight]
+      ,[ShipName]
+      ,[ShipAddress]
+      ,[ShipCity]
+      ,[ShipRegion]
+      ,[ShipPostalCode]
+      ,[ShipCountry]
+      ,[ProductID]
+      ,[UnitPrice]
+      ,[Quantity]
+      ,[Discount]
+from [ODS_Orders] o
+left join [ODS_Order Details] od on o.OrderID = od.OrderID
+;
+
 
 
 
@@ -49,13 +70,13 @@ SELECT
 FROM [Northwind - DWH].[dbo].[ODS_Orders]
 ;
 
-
+------------------------------------------------------------------
 
 --[Order Details]
 CREATE TABLE [Northwind - DWH].[dbo].[ODS_Order Details](
 	[OrderID] [int],
 	[ProductID] [int],
-	[UnitPrice_USD] [money],
+	[UnitPrice] [money],
 	[Quantity] [smallint],
 	[Discount] [real]
 )
@@ -64,58 +85,36 @@ drop table [Northwind - DWH].[dbo].[ODS_Order Details];
 truncate table [Northwind - DWH].[dbo].[ODS_Order Details];
 select * from [Northwind - DWH].[dbo].[ODS_Order Details];
 
-
+------------------------------------------------------------------
 
 --[Employees]
-CREATE TABLE [Northwind - DWH].[dbo].[ODS_Employees](
-	[EmployeeID] [int] ,
-	[LastName] [nvarchar](20) ,
-	[FirstName] [nvarchar](10) ,
-	[Title] [nvarchar](30) ,
-	[TitleOfCourtesy] [nvarchar](25) ,
-	[BirthDate] [datetime] ,
-	[HireDate] [datetime] ,
-	[Address] [nvarchar](60) ,
-	[City] [nvarchar](15) ,
-	[Region] [nvarchar](15) ,
-	[PostalCode] [nvarchar](10) ,
-	[Country] [nvarchar](15) ,
-	[HomePhone] [nvarchar](24) ,
-	[Extension] [nvarchar](4) ,
-	[Photo] [image] ,
-	[Notes] [ntext] ,
-	[ReportsTo] [int] ,
-	[PhotoPath] [nvarchar](255)
-    )
+CREATE TABLE [dbo].[ODS_Employees]
+(
+	[EmployeeID] [nvarchar](20) NULL,
+	[LastName] [nvarchar](20) NULL,
+	[FirstName] [nvarchar](10) NULL,
+	[Title] [nvarchar](30) NULL,
+	[TitleOfCourtesy] [nvarchar](25) NULL,
+	[BirthDate] [datetime] NULL,
+	[HireDate] [datetime] NULL,
+	[Address] [nvarchar](60) NULL,
+	[City] [nvarchar](15) NULL,
+	[Region] [nvarchar](15) NULL,
+	[PostalCode] [nvarchar](10) NULL,
+	[Country] [nvarchar](15) NULL,
+	[HomePhone] [nvarchar](24) NULL,
+	[Extension] [nvarchar](4) NULL,
+	[Photo] [image] NULL,
+	[Notes] [nvarchar](1000) NULL,
+	[ReportsTo] [nvarchar](20) NULL,
+	[PhotoPath] [nvarchar](255) NULL
+) 
 ;
-
-CREATE TABLE [Northwind - DWH].[dbo].[ODS_Employees](
-	[EmployeeID] [nvarchar](20) ,
-	[LastName] [nvarchar](20) ,
-	[FirstName] [nvarchar](10) ,
-	[Title] [nvarchar](30) ,
-	[TitleOfCourtesy] [nvarchar](25) ,
-	[BirthDate] [datetime] ,
-	[HireDate] [datetime] ,
-	[Address] [nvarchar](60) ,
-	[City] [nvarchar](15) ,
-	[Region] [nvarchar](15) ,
-	[PostalCode] [nvarchar](10) ,
-	[Country] [nvarchar](15) ,
-	[HomePhone] [nvarchar](24) ,
-	[Extension] [nvarchar](4) ,
-	[Photo] [image] ,
-	[Notes] [nvarchar](255) ,
-	[ReportsTo] [nvarchar](20) ,
-	[PhotoPath] [nvarchar](255)
-    )
-;
-
 drop table [Northwind - DWH].[dbo].[ODS_Employees];
 truncate table [Northwind - DWH].[dbo].[ODS_Employees];
 select * from [Northwind - DWH].[dbo].[ODS_Employees];
 
-
+------------------------------------------------------------------
 
 -- [Exchange Rate]
 CREATE TABLE [Northwind - DWH].[dbo].[ODS_Exchange_Rate](
@@ -135,6 +134,7 @@ drop table [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
 truncate table [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
 select * from [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
 
+------------------------------------------------------------------
 
  -- [products]
 CREATE TABLE [Northwind - DWH].[dbo].[ODS_Products](
@@ -154,3 +154,116 @@ drop table [Northwind - DWH].[dbo].[ODS_Products];
 select * from [Northwind - DWH].[dbo].[ODS_Products];
 truncate table [Northwind - DWH].[dbo].[ODS_Products];
 
+
+------------------------------------------------ STG ------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------------------------------
+
+--[OrderS]
+CREATE TABLE [Northwind - DWH].[dbo].[STG_Orders]
+(
+	[OrderID] [int] ,
+	[CustomerID] [nchar](5) ,
+	[EmployeeID] [int] ,
+	[OrderDate] [datetime2] ,
+	[RequiredDate] [datetime2] ,
+	[ShippedDate] [datetime2] ,
+	[ShipVia] [int] ,
+	[Freight] [money] ,
+	[ShipName] [nvarchar](40) ,
+	[ShipAddress] [nvarchar](60) ,
+	[ShipCity] [nvarchar](15) ,
+	[ShipRegion] [nvarchar](15) ,
+	[ShipPostalCode] [nvarchar](10) ,
+	[ShipCountry] [nvarchar](15)
+)
+;
+drop table [Northwind - DWH].[dbo].[STG_Orders];
+truncate table [Northwind - DWH].[dbo].[STG_Orders];
+SELECT * FROM [Northwind - DWH].[dbo].[STG_Orders]
+;
+
+
+
+-- [Exchange Rate]
+CREATE TABLE [Northwind - DWH].[dbo].[STG_Exchange_Rate]
+(
+	[result] varchar(100),
+	[documentation] varchar(100),
+	[terms_of_use] varchar(100),
+	[time_last_update_unix] varchar(100),
+	[time_last_update_utc] varchar(100),
+	[time_next_update_unix] varchar(100),
+	[time_next_update_utc] varchar(100),
+	[base_code] varchar(100),
+	[conversion_rates] varchar(100),
+	[index1] varchar(100)
+	)
+;
+drop table [Northwind - DWH].[dbo].[STG_Exchange_Rate];
+truncate table [Northwind - DWH].[dbo].[STG_Exchange_Rate];
+select * from [Northwind - DWH].[dbo].[STG_Exchange_Rate];
+
+------------------------------------------------ DWH ------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+
+--[OrderS]
+CREATE TABLE [Northwind - DWH].[dbo].[DWH_Orders]
+(
+	[OrderID] [int] ,
+	[CustomerID] [nchar](5) ,
+	[EmployeeID] [int] ,
+	[OrderDate] [datetime2] ,
+	[RequiredDate] [datetime2] ,
+	[ShippedDate] [datetime2] ,
+	[ShipVia] [int] ,
+	[Freight] [money] ,
+	[ShipName] [nvarchar](40) ,
+	[ShipAddress] [nvarchar](60) ,
+	[ShipCity] [nvarchar](15) ,
+	[ShipRegion] [nvarchar](15) ,
+	[ShipPostalCode] [nvarchar](10) ,
+	[ShipCountry] [nvarchar](15)
+)
+;
+drop table [Northwind - DWH].[dbo].[DWH_Orders];
+truncate table [Northwind - DWH].[dbo].[DWH_Orders];
+SELECT * FROM [Northwind - DWH].[dbo].[DWH_Orders]
+;
+
+-- [Exchange Rate]
+CREATE TABLE [Northwind - DWH].[dbo].[DWH_Exchange_Rate]
+(
+	[result] varchar(100),
+	[documentation] varchar(100),
+	[terms_of_use] varchar(100),
+	[time_last_update_unix] varchar(100),
+	[time_last_update_utc] varchar(100),
+	[time_next_update_unix] varchar(100),
+	[time_next_update_utc] varchar(100),
+	[base_code] varchar(100),
+	[conversion_rates] varchar(100),
+	[index1] varchar(100)
+	)
+;
+drop table [Northwind - DWH].[dbo].[DWH_Exchange_Rate];
+truncate table [Northwind - DWH].[dbo].[DWH_Exchange_Rate];
+select * from [Northwind - DWH].[dbo].[DWH_Exchange_Rate];
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+											-- insert tables --
+									  -----------------------------
+-- [Exchange Rate]
+insert into [Northwind - DWH].[dbo].[DWH_Exchange_Rate] values
+('success',	'https://www.exchangerate-api.com/docs',	'https://www.exchangerate-api.com/terms',	1724198401,	'Tue, 20 Aug 2024 00:00:01 +0000',	1724284801,	'Wed, 21 Aug 2024 00:00:01 +0000','USD',	0.9002,	'EUR'),
+('success',	'https://www.exchangerate-api.com/docs',	'https://www.exchangerate-api.com/terms',	1724198401,	'Mon, 19 Aug 2024 00:00:01 +0000',	1724284801,	'Tue, 20 Aug 2024 00:00:01 +0000','USD',	0.9002,	'EUR'),
+('success',	'https://www.exchangerate-api.com/docs',	'https://www.exchangerate-api.com/terms',	1724198401,	'Sun, 18 Aug 2024 00:00:01 +0000',	1724284801,	'Mon, 19 Aug 2024 00:00:01 +0000','USD',	0.9002,	'EUR'),
+('success',	'https://www.exchangerate-api.com/docs',	'https://www.exchangerate-api.com/terms',	1724198401,	'Sat, 17 Aug 2024 00:00:01 +0000',	1724284801,	'Sun, 18 Aug 2024 00:00:01 +0000','USD',	0.9002,	'EUR'),
+('success',	'https://www.exchangerate-api.com/docs',	'https://www.exchangerate-api.com/terms',	1724198401,	'Fri, 16 Aug 2024 00:00:01 +0000',	1724284801,	'Sat, 17 Aug 2024 00:00:01 +0000','USD',	0.9002,	'EUR'),
+('success',	'https://www.exchangerate-api.com/docs',	'https://www.exchangerate-api.com/terms',	1724198401,	'Thu, 15 Aug 2024 00:00:01 +0000',	1724284801,	'Fri, 16 Aug 2024 00:00:01 +0000','USD',	0.9002,	'EUR')
+;

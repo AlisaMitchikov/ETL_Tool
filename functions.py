@@ -60,7 +60,6 @@ def OPR_to_ODS_MySQL(OPR_to_ODS_tables_list_MySQL,MySQL_source_con,target_conn):
         # Read tables data from the source database
         query = f"SELECT * FROM {source_table_name}"
         data = pd.read_sql(query, MySQL_source_con)
-        print(data)
 
         # Write data to the target database
         for index, row in data.iterrows():
@@ -108,6 +107,10 @@ def OPR_to_ODS_API(OPR_to_ODS_tables_list_API,target_conn):
 
     # create cursor
     cursor = target_conn.cursor()        
+
+    # Truncate ODS table
+    query = f"truncate table [{key}]"
+    cursor.execute(query)    
 
     # Write data to the target database
     for index, row in df.iterrows():
