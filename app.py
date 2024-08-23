@@ -5,44 +5,24 @@ from functions import ETL
 
 # OPR SQL Server tables
 # ['source_table_1', 'source_table_2', ....]
-# OPR_to_ODS_tables_list_SQL = ['Customers', 'Orders']
 OPR_to_ODS_tables_list_SQL = []
 
 # OPR MySQL tables
 # ['source_table_1', 'source_table_2', ....]
-# OPR_to_ODS_tables_list_MySQL = ['products', 'suppliers']
 OPR_to_ODS_tables_list_MySQL = []
 
 # OPR CSV
 # {'target_table_1' : 'CSV_path', ...}
-# OPR_to_ODS_tables_list_CSV = {'ODS_Region':r"E:\קריירה\הכנה 2024\פרוייקטים\etl pipeline\app\sources\CSV\Region.csv"}
 OPR_to_ODS_tables_list_CSV = {}
 
 # OPR API
 # {'target_table_1' : 'API_url', ...}
-OPR_to_ODS_tables_list_API = {'ODS_Exchange_Rate':r'https://v6.exchangerate-api.com/v6/12566f6fc3a965b80afd4734/latest/USD'}
+OPR_to_ODS_tables_list_API = {}
 
 # --------STG + DWH----------
 
 # ETL queries 
 DWH_queries_dict = {
-    'truncate STG' : """truncate table [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs];""",
-    'insert into STG' : """insert into [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs] ([CustomerID],[#_orders])
-                           select 
-                                c.[CustomerID],
-                                count(o.OrderID) as #_orders
-                           from [Northwind - DWH].[dbo].[ODS_Customers] c
-                           left join [Northwind - DWH].[dbo].[ODS_Orders] o on c.CustomerID = o.CustomerID
-                           group by c.[CustomerID]
-                           order by #_orders desc""",
-    'delete from DWH' : """delete from [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs]
-                           where exists (select 1
-                                         from [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs] s
-                                         where s.[CustomerID] = [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs].[CustomerID])
-                           ;""",
-    'insert into DWH' : """insert into [Northwind - DWH].[dbo].[DWH_Fact_Customers_KPIs] ([CustomerID],[#_orders])
-                           select [CustomerID],[#_orders] from [Northwind - DWH].[dbo].[STG_Fact_Customers_KPIs]
-                           ;"""
 
 }
 

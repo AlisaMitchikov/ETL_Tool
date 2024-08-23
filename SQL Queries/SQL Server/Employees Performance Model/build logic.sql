@@ -157,6 +157,7 @@ select * from [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate];
 select * from [Northwind - DWH].[dbo].[DWH_DIM_Exchange_Rate];
 
 -- STG
+delete from [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate];
 insert into [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate]
 select * from [Northwind - DWH].[dbo].[ODS_Exchange_Rate] where index1 = 'EUR'
 ;
@@ -172,16 +173,19 @@ select * from [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate]
 ;
 
 
--------------------------------------------------VIEWS-------------------------------------------------
--------------------------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------------------------
+------------------------------------------------ [Employye Performance] ------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
-create view [Vw_Fact_Employee_Performance]
-as
+-- select from tables --
+select * from [Northwind - DWH].[dbo].[DWH_Fact_Employee_Performance];
+
+-- DWH
+truncate table [Northwind - DWH].[dbo].[DWH_Fact_Employee_Performance];
+insert into [Northwind - DWH].[dbo].[DWH_Fact_Employee_Performance]
 SELECT 
-
 	-- select employee, date, sum sales 
     SD.EmployeeID,
+	SD.EmployeeName,
     SD.OrderDate,
     SD.USDTotalSales,
     SD.EURTotalSales,
@@ -202,12 +206,12 @@ SELECT
         PARTITION BY SD.OrderDate 
         ORDER BY SD.USDTotalSales DESC
     ) AS DailySalesRank
-
 FROM
 (
     -- group by employee, date --> sum sales
     SELECT 
         o.EmployeeID,
+		(em.[LastName]+' '+em.[FirstName]) as EmployeeName,
         CONVERT(DATE, o.OrderDate) AS OrderDate,
         SUM(o.Quantity * o.UnitPrice) AS USDTotalSales,
         isnull(SUM(o.Quantity * o.UnitPrice * e.conversion_rates),-1) AS EURTotalSales,
@@ -215,8 +219,9 @@ FROM
     FROM [DWH_Fact_Orders] o
 	LEFT JOIN [DWH_DIM_Exchange_Rate] e 
 	   ON CAST(CONVERT(DATE, TRIM(SUBSTRING([time_last_update_utc],(CHARINDEX(',', [time_last_update_utc])+1),((select len([time_last_update_utc]))-(SELECT CHARINDEX('00', [time_last_update_utc]))))), 113) AS DATE) = CONVERT(DATE, o.OrderDate)
+    LEFT JOIN [Northwind - DWH].[dbo].[DWH_DIM_Employees] em 
+	   ON em.EmployeeID = o.EmployeeID
     GROUP BY 
-        o.EmployeeID, o.OrderDate
+        o.EmployeeID, (em.[LastName]+' '+em.[FirstName]) ,o.OrderDate
 ) SD
-
 ;

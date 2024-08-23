@@ -5,11 +5,9 @@ from functions import ETL
 
 # OPR SQL Server tables
 OPR_to_ODS_tables_list_SQL = ['Orders','Order Details','Employees']
-# OPR_to_ODS_tables_list_SQL = []
 
 # OPR MySQL tables
 OPR_to_ODS_tables_list_MySQL = ['products']
-# OPR_to_ODS_tables_list_MySQL = []
 
 # OPR CSV
 OPR_to_ODS_tables_list_CSV = {}
