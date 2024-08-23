@@ -16,7 +16,7 @@ Essentially, this file represents the entire ETL workflow.
 Before making any changes, create a copy of `ETL_ETLs_name.py` and rename it to match your specific ETL task 
 (replace 'ETLsName' with your ETL's name).
 
-After configuring the file, install the necessary dependencies listed in requirements.txt. 
+After configuring the file, install the necessary dependencies listed in `requirements.txt`. 
 Then, run your customized script to ensure the ETL pipeline functions as expected. 
 
 If everything works smoothly, you can deploy the repository and orchestrate the tool's execution.
@@ -24,7 +24,7 @@ If everything works smoothly, you can deploy the repository and orchestrate the 
 ## Example
 To help you better understand the tool, 
 I've created an example ETL in the `Employees_Performance_Model.py` file. 
-This ETL is designed to work with the [Northwind database](https://github.com/cjlee/northwind/blob/master/northwind.sql.zip). 
+This ETL is designed to work with the [Northwind database](https://github.com/cjlee/northwind/blob/master/northwind.sql.zip).<br> 
 It imports data from multiple sources: SQL Server, MySQL, and a JSON API. 
 After importing the data, it performs SQL queries on it.
 
