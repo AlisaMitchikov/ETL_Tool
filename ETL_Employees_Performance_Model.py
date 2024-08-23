@@ -1,25 +1,41 @@
 from functions import ETL
 
-# --------OPR----------
+# --------------------------------------------------------------- Source & Target Connections ---------------------------------------------------------------
+
+# Source - SQL Server --> {'DRIVER':'{}','SERVER': '', 'DATABASE': '', 'Trusted_Connection': ''}
+SQL_server_source_connect_details = {'DRIVER': '{ODBC Driver 17 for SQL Server}',
+                                    'SERVER': 'ALISAM-LAPTOP',
+                                    'DATABASE': 'Northwind - OPR',
+                                    'Trusted_Connection': 'yes'}
+
+# Source - MySQL --> {'host': '', 'user': '', 'password': '', 'database': ''}
+MySQL_source_connect_details = {'host': 'localhost', 'user': 'root', 'password': '', 'database': 'northwind - opr'}
+
+# Target - SQL Server --> {'DRIVER':'{}','SERVER': '', 'DATABASE': '', 'Trusted_Connection': ''}
+SQL_server_target_connect_details = {'DRIVER': '{ODBC Driver 17 for SQL Server}',
+                                    'SERVER': 'ALISAM-LAPTOP',
+                                    'DATABASE': 'Northwind - DWH',
+                                    'Trusted_Connection': 'yes'}
 
 
-# OPR SQL Server tables
+# ------------------------------------------------------------------------ OPR to ODS ------------------------------------------------------------------------
+
+# OPR SQL Server tables --> ['source_table_1', 'source_table_2', ....] * if not needed, leave empty list
 OPR_to_ODS_tables_list_SQL = ['Orders','Order Details','Employees']
 
-# OPR MySQL tables
+# OPR MySQL tables --> ['source_table_1', 'source_table_2', ....] * if not needed, leave empty list
 OPR_to_ODS_tables_list_MySQL = ['products']
 
-# OPR CSV
+# OPR CSV --> {'target_table_1' : 'CSV_path', ...} * if not needed, leave empty dictionary
 OPR_to_ODS_tables_list_CSV = {}
 
-# OPR API
+# OPR API --> {'target_table_1' : 'API_url', ...} * if not needed, leave empty dictionary
 OPR_to_ODS_tables_list_API = {'ODS_Exchange_Rate':r'https://v6.exchangerate-api.com/v6/12566f6fc3a965b80afd4734/latest/USD'}
 
-# --------STG + DWH----------
+# --------------------------------------------------------------------- ODS to DWH & DWH ---------------------------------------------------------------------
 
-# ETL queries 
+# ETL queries --> {'query_#1_description' : 'query', 'query_#2_description' : 'query', ...}
 DWH_queries_dict = {
-    # TABLES
         'Orders_STG' : """truncate table [Northwind - DWH].[dbo].[STG_Fact_Orders];
                             insert into [Northwind - DWH].[dbo].[STG_Fact_Orders] 
                             select 
@@ -122,14 +138,18 @@ DWH_queries_dict = {
                                                 o.EmployeeID, (em.[LastName]+' '+em.[FirstName]) ,o.OrderDate
                                         ) SD
                                         ;"""
-}
+                    }
 
-# ----------------------------RUN------------------------------
+# -------------------------------------------------------------------------- Run ETL --------------------------------------------------------------------------
 
 # ETL proccess
-ETL(OPR_to_ODS_tables_list_SQL,OPR_to_ODS_tables_list_MySQL,OPR_to_ODS_tables_list_CSV,OPR_to_ODS_tables_list_API,DWH_queries_dict)
-
-
-
+ETL(SQL_server_source_connect_details,
+    MySQL_source_connect_details,
+    SQL_server_target_connect_details,
+    OPR_to_ODS_tables_list_SQL,
+    OPR_to_ODS_tables_list_MySQL,
+    OPR_to_ODS_tables_list_CSV,
+    OPR_to_ODS_tables_list_API,
+    DWH_queries_dict)
 
 

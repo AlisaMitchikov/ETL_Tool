@@ -1,26 +1,25 @@
 #                                        ETL Tool
 
 ## What does the tool do ?
-This ETL tool is designed to import data from multiple sources, 
+This ETL tool written in Python is designed to run an ETL pipline :
+1. It imports data from multiple sources, 
 including SQL Server, MySQL, CSV files, and JSON data from APIs, 
 into a SQL Server data warehouse. 
-Once the data is imported, 
+2. Once the data is imported, 
 the tool allows you to run SQL queries sequentially on the data in a specified order, 
-facilitating the creation of your ETL processes.
+enabling the creation of the objects in the data warehouse.
 
 ## How it works ?
-The `functions.py` file is where all the magic is stored. 
-This file contains the code for importing data from the specified sources 
-and running the SQL queries. 
+To set up your ETL process, start by configuring the `ETL_ETLs_name.py file`. 
+In this file, you'll define the tables and data sources to import and specify the SQL queries that will be executed.
+Essentially, this file represents the entire ETL workflow.
+Before making any changes, create a copy of `ETL_ETLs_name.py` and rename it to match your specific ETL task 
+(replace 'ETLsName' with your ETL's name).
 
-To make this magic work, you'll need to configure the `app.py file`.
-In `app.py`, you'll specify the tables and sources for data import 
-and define the SQL queries to be executed. 
-Essentially, the `app.py` file represents the entire ETL process. 
-Before you start, make a copy of it and rename it to reflect your specific ETL.
+After configuring the file, install the necessary dependencies listed in requirements.txt. 
+Then, run your customized script to ensure the ETL pipeline functions as expected. 
 
-Once you've configured `app.py`, install the necessary libraries as listed in the `requirements.txt` file, 
-and simply run your file.
+If everything works smoothly, you can deploy the repository and orchestrate the tool's execution.
 
 ## Example
 To help you better understand the tool, 

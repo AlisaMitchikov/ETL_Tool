@@ -2,7 +2,6 @@ import pyodbc
 import pandas as pd
 import requests
 import mysql.connector 
-import numpy as np
 
 def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn):
  
@@ -140,23 +139,29 @@ def DWH(DWH_queries_dict,target_conn):
 
 # ---------------------------------------------------------------------------------
 
-def ETL(OPR_to_ODS_tables_list_SQL,OPR_to_ODS_tables_list_MySQL,OPR_to_ODS_tables_list_CSV,OPR_to_ODS_tables_list_API,DWH_queries_dict):
+def ETL(SQL_server_source_connect_details,
+        MySQL_source_connect_details,
+        SQL_server_target_connect_details,
+        OPR_to_ODS_tables_list_SQL,
+        OPR_to_ODS_tables_list_MySQL,
+        OPR_to_ODS_tables_list_CSV,
+        OPR_to_ODS_tables_list_API,
+        DWH_queries_dict):
 
-    # Create connections to servers
-    SQL_source_conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
-                                'SERVER=ALISAM-LAPTOP;'
-                                'DATABASE=Northwind - OPR;'
-                                'Trusted_Connection=yes;')
+    SQL_source_conn = pyodbc.connect(f'DRIVER={SQL_server_source_connect_details['DRIVER']};'
+                                f'SERVER={SQL_server_source_connect_details['SERVER']};'
+                                f'DATABASE={SQL_server_source_connect_details['DATABASE']};'
+                                f'Trusted_Connection={SQL_server_source_connect_details['Trusted_Connection']};')
     
-    MySQL_source_con = mysql.connector.connect(host="localhost",
-                                        user="root",
-                                        password="",
-                                        database="northwind - opr")    
+    MySQL_source_con = mysql.connector.connect(host=MySQL_source_connect_details["host"],
+                                        user=MySQL_source_connect_details["user"],
+                                        password=MySQL_source_connect_details["password"],
+                                        database=MySQL_source_connect_details["database"])    
 
-    target_conn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};'
-                                'SERVER=ALISAM-LAPTOP;'
-                                'DATABASE=Northwind - DWH;'
-                                'Trusted_Connection=yes;')   
+    target_conn = pyodbc.connect(f'DRIVER={SQL_server_target_connect_details['DRIVER']};'
+                                f'SERVER={SQL_server_target_connect_details['SERVER']};'
+                                f'DATABASE={SQL_server_target_connect_details['DATABASE']};'
+                                f'Trusted_Connection={SQL_server_target_connect_details['Trusted_Connection']};')
     
     if len(OPR_to_ODS_tables_list_SQL) > 0:
         OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn)
