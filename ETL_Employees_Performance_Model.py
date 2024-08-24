@@ -17,7 +17,6 @@ SQL_server_target_connect_details = {'DRIVER': '{ODBC Driver 17 for SQL Server}'
                                     'DATABASE': 'Northwind - DWH',
                                     'Trusted_Connection': 'yes'}
 
-
 # ------------------------------------------------------------------------ OPR to ODS ------------------------------------------------------------------------
 
 # OPR SQL Server tables --> ['source_table_1', 'source_table_2', ....] * if not needed, leave empty list
@@ -27,7 +26,7 @@ OPR_to_ODS_tables_list_SQL = ['Orders','Order Details','Employees']
 OPR_to_ODS_tables_list_MySQL = ['products']
 
 # OPR CSV --> {'target_table_1' : 'CSV_path', ...} * if not needed, leave empty dictionary
-OPR_to_ODS_tables_list_CSV = {}
+OPR_to_ODS_tables_list_CSV = {'shippers': r"E:\קריירה\הכנה 2024\פרוייקטים\etl pipeline\app\sources\CSV\shippers.csv"}
 
 # OPR API --> {'target_table_1' : 'API_url', ...} * if not needed, leave empty dictionary
 OPR_to_ODS_tables_list_API = {'ODS_Exchange_Rate':r'https://v6.exchangerate-api.com/v6/12566f6fc3a965b80afd4734/latest/USD'}
@@ -92,7 +91,13 @@ DWH_queries_dict = {
                                     ;
                                     insert into [Northwind - DWH].[dbo].[DWH_DIM_Exchange_Rate]
                                     select * from [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate]
-                                    ;""",                            
+                                    ;""",  
+        'shippers_STG' : """truncate table [Northwind - DWH].[dbo].[STG_DIM_Shippers];
+                                insert into [Northwind - DWH].[dbo].[STG_DIM_Shippers]
+                                select * from [ODS_Shippers];""",
+        'shippers_DWH' : """truncate table [Northwind - DWH].[dbo].[DWH_DIM_Shippers];
+                                insert into [Northwind - DWH].[dbo].[DWH_DIM_Shippers]
+                                select * from [STG_DIM_Shippers];""",
         'Employee Performance' : """truncate table [Northwind - DWH].[dbo].[DWH_Fact_Employee_Performance];
                                         insert into [Northwind - DWH].[dbo].[DWH_Fact_Employee_Performance]
                                         SELECT 
@@ -143,13 +148,17 @@ DWH_queries_dict = {
 # -------------------------------------------------------------------------- Run ETL --------------------------------------------------------------------------
 
 # ETL proccess
-ETL(SQL_server_source_connect_details,
-    MySQL_source_connect_details,
-    SQL_server_target_connect_details,
-    OPR_to_ODS_tables_list_SQL,
-    OPR_to_ODS_tables_list_MySQL,
-    OPR_to_ODS_tables_list_CSV,
-    OPR_to_ODS_tables_list_API,
-    DWH_queries_dict)
+try:
+    ETL(SQL_server_source_connect_details,
+        MySQL_source_connect_details,
+        SQL_server_target_connect_details,
+        OPR_to_ODS_tables_list_SQL,
+        OPR_to_ODS_tables_list_MySQL,
+        OPR_to_ODS_tables_list_CSV,
+        OPR_to_ODS_tables_list_API,
+        DWH_queries_dict)
+except Exception as err:
+    print(err)
+
 
 

@@ -17,16 +17,38 @@ Before making any changes, create a copy of `ETL_ETLs_name.py` and rename it to 
 (replace 'ETLsName' with your ETL's name).
 
 After configuring the file, install the necessary dependencies listed in `requirements.txt`. 
-Then, run your customized script to ensure the ETL pipeline functions as expected. 
+Then, run your customized file (`ETL_ETLs_name.py`) to ensure the ETL pipeline functions as expected. 
 
-If everything works smoothly, you can deploy the repository and orchestrate the tool's execution.
+If everything works smoothly, you can orchestrate the tool's execution.
+In the orchestration platform, configure to run `app.py` file which executes all ETL files in the tool
+(as per now you have only one ETL file that runs one ETL pipeline, but you may need to create additonal pipelines).
 
-## Example
+If everything runs smoothly, you can proceed to orchestrate the tool's execution. 
+In your orchestration platform, set it up to execute the `app.py` file, which executes all ETL scripts within the tool.
+Currently, you might have only one ETL script for a single pipeline, but this setup allows you to easily add and manage additional pipelines as needed and execute them sequentially.
+
+## Example ETL Process
 To help you better understand the tool, 
 I've created an example ETL in the `Employees_Performance_Model.py` file. 
-This ETL is designed to work with the [Northwind database](https://github.com/cjlee/northwind/blob/master/northwind.sql.zip).<br> 
-It imports data from multiple sources: SQL Server, MySQL, and a JSON API. 
-After importing the data, it performs SQL queries on it.
+This ETL is designed to work with the [Northwind database](https://github.com/cjlee/northwind/blob/master/northwind.sql.zip).
+
+### Overview
+This ETL process extracts data from multiple sources, including SQL Server, MySQL, and a JSON API. 
+Once the data is imported, the pipeline executes a series of SQL queries to transform and load the data into the target data warehouse.
+
+Sources: 
+- SQL Server : Orders, Order Details, Employees
+- MySQL : products
+- CSV : shippers
+- API : Exchange Rate
+
+Target:
+- DWH_DIM_Employees
+- DWH_DIM_Products
+- DHW_DIM_Exchange Rate
+- DWH_DIM_Shippers
+- DWH_Fact_Orders
+- DWH_Fact_Employee_Performance
 
 ## Note
 For your convenience, you can store your queries in the SQL Queries directory, 

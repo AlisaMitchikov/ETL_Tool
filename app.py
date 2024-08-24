@@ -3,9 +3,16 @@ import subprocess
 
 etl_directory = './.'
 excluded_files = {'app.py', 'ETL_ETLs_name.py', 'functions.py'}
-etl_scripts = [f for f in os.listdir(etl_directory) if f.endswith('.py') and f not in excluded_files]
 
-for script in etl_scripts:
-    print(f'Running {script}...')
-    script_path = os.path.join(etl_directory, script)
-    subprocess.run(['py', script_path])
+try:
+    
+    etl_scripts = [f for f in os.listdir(etl_directory) if f.endswith('.py') and f not in excluded_files]
+
+    for script in etl_scripts:
+        print(f'Running {script} - ')
+        script_path = os.path.join(etl_directory, script)
+        subprocess.run(['py', script_path])
+
+except OSError as e:
+    print(f"Error accessing directory {etl_directory}: {e}")
+    exit(1)
