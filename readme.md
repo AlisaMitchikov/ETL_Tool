@@ -47,7 +47,7 @@ Sources:
 - CSV : shippers
 - API : Exchange Rate
 
-Target (SQL Server data warehouse) :
+Target Tables (SQL Server data warehouse) :
 - DWH_DIM_Employees
 - DWH_DIM_Products
 - DHW_DIM_Exchange_Rate
