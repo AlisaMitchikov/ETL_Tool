@@ -23,9 +23,14 @@ If everything works smoothly, you can orchestrate the tool's execution.
 In the orchestration platform, configure to run `app.py` file which executes all ETL files in the tool
 (as per now you have only one ETL file that runs one ETL pipeline, but you may need to create additonal pipelines).
 
-If everything runs smoothly, you can proceed to orchestrate the tool's execution. 
-In your orchestration platform, set it up to execute the `app.py` file, which executes all ETL scripts within the tool.
-Currently, you might have only one ETL script for a single pipeline, but this setup allows you to easily add and manage additional pipelines as needed and execute them sequentially.
+Once everything is running smoothly, you can move on to orchestrating the tool's execution. 
+In your orchestration platform, configure it to run the `app.py` file. 
+This file manages the execution of all ETL scripts within the tool.
+
+Even if you currently have only one ETL script for a single pipeline, this setup is designed to easily accommodate additional pipelines.
+The `app.py` file offers two execution options:
+- Execute all pipelines: automatically runs all ETL scripts located in the current directory without specifying individual files or execution order.
+- Execute specific pipelines: allows you to specify and execute particular ETL pipelines in a defined order.
 
 ## Example ETL Process
 To help you better understand the tool, 
@@ -45,7 +50,7 @@ Sources:
 Target:
 - DWH_DIM_Employees
 - DWH_DIM_Products
-- DHW_DIM_Exchange Rate
+- DHW_DIM_Exchange_Rate
 - DWH_DIM_Shippers
 - DWH_Fact_Orders
 - DWH_Fact_Employee_Performance
