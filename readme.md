@@ -67,3 +67,14 @@ organized under your ETL’s name.
 For example, you can find the queries for the Employees_Performance model in this directory.
 
 Go and work your magic ! 🪄
+
+## Testing the ETL Tool
+The `test_etl_tool.py` file includes unit tests for the ETL functions to verify their correctness:
+- OPR_to_ODS_SQL: Tests success and failure scenarios for SQL Server data extraction and insertion.
+- OPR_to_ODS_MySQL: Validates MySQL data extraction and insertion, handling errors properly.
+- OPR_to_ODS_CSV: Confirms correct CSV file processing and data insertion.
+- OPR_to_ODS_API: Checks API data fetching and handles processing errors.
+
+Running the Tests :
+- Setup: Install dependencies using pip install -r requirements.txt.
+- Execute via terminal 'python -m unittest discover'

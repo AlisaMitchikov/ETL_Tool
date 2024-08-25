@@ -82,7 +82,7 @@ def OPR_to_ODS_MySQL(OPR_to_ODS_tables_list_MySQL,MySQL_source_con,target_conn):
             target_conn.commit()  
 
         except Exception as e:
-            print(f"Error processing table {item}: {e}")
+            print(f"Error processing table {key}: {e}")
             target_conn.rollback()
             return False  # Indicate failure
     return True  # Indicate success                      
