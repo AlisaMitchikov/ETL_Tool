@@ -7,14 +7,14 @@ import warnings
 
 def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn):
 
-    for item in OPR_to_ODS_tables_list_SQL:
+    for key,value in OPR_to_ODS_tables_list_SQL.items():
 
         try:
                 # Source table
-                source_table_name = item 
+                source_table_name = key 
 
                 # Target table
-                target_table_name = 'ODS_'+item
+                target_table_name = 'ODS_'+key
 
                 # create cursor
                 cursor = target_conn.cursor()
@@ -24,7 +24,7 @@ def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn):
                 cursor.execute(query)
 
                 # Read tables data from the source database
-                query = f"SELECT * FROM [{source_table_name}]"
+                query = value
                 data = pd.read_sql(query, SQL_source_conn)
                 for col in data:
                     if data[col].dtype.name == 'float64':
@@ -42,7 +42,7 @@ def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn):
                 target_conn.commit()   
 
         except Exception as e:
-            print(f"Error processing table {item}: {e}")
+            print(f"Error processing table {key}: {e}")
             target_conn.rollback() 
             return False  # Indicate failure
     return True  # Indicate success                   
@@ -50,15 +50,15 @@ def OPR_to_ODS_SQL(OPR_to_ODS_tables_list_SQL,SQL_source_conn,target_conn):
 
 def OPR_to_ODS_MySQL(OPR_to_ODS_tables_list_MySQL,MySQL_source_con,target_conn):
  
-    for item in OPR_to_ODS_tables_list_MySQL:
+    for key,value in OPR_to_ODS_tables_list_MySQL.items():
 
         try:
 
             # Source table
-            source_table_name = item 
+            source_table_name = key 
 
             # Target table
-            target_table_name = 'ODS_'+item
+            target_table_name = 'ODS_'+key
 
             # create cursor
             cursor = target_conn.cursor()
@@ -68,7 +68,7 @@ def OPR_to_ODS_MySQL(OPR_to_ODS_tables_list_MySQL,MySQL_source_con,target_conn):
             cursor.execute(query)
 
             # Read tables data from the source database
-            query = f"SELECT * FROM {source_table_name}"
+            query = value
             data = pd.read_sql(query, MySQL_source_con)
 
             # Write data to the target database

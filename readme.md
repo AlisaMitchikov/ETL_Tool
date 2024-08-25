@@ -10,9 +10,15 @@ the tool allows you to run SQL queries sequentially on the data in a specified o
 enabling the creation of the objects in the data warehouse.
 
 ## How it works ?
-To set up your ETL process, start by configuring the `ETL_ETLs_name.py file`. 
-In this file, you'll define the tables and data sources to import and specify the SQL queries that will be executed.
+
+To set up your ETL process, begin by creating the ODS tables in the data warehouse with a schema that matches the source tables, using the standard naming convention: ODS_<table_name> (mandatory for tools functionality). Then, proceed to create the STG and DWH tables in the data warehouse also using the standard naming conventions (recommended).
+
+Next, configure the `ETL_ETLs_name.py` file. 
+Start by defining the data sources, specifying the tables to be imported, and tailor the queries to selectively import only the data needed for delta loads. 
+Finally, write the SQL queries that will be executed on the imported data within the data warehouse. 
+
 Essentially, this file represents the entire ETL workflow.
+
 Before making any changes, create a copy of `ETL_ETLs_name.py` and rename it to match your specific ETL task 
 (replace 'ETLsName' with your ETL's name).
 

@@ -19,11 +19,14 @@ SQL_server_target_connect_details = {'DRIVER': '{ODBC Driver 17 for SQL Server}'
 
 # ------------------------------------------------------------------------ OPR to ODS ------------------------------------------------------------------------
 
-# OPR SQL Server tables --> ['source_table_1', 'source_table_2', ....] * if not needed, leave empty list
-OPR_to_ODS_tables_list_SQL = ['Orders','Order Details','Employees']
+# OPR SQL Server tables --> {'source_table_1' : query, 'source_table_2' : query, ...} * if not needed, leave empty list
+OPR_to_ODS_tables_list_SQL = {'Orders' : """select * from [Orders] 
+                                            where cast(OrderDate as date) >= cast((getdate()-5) as date);""",
+                              'Order Details' : """select * from [Order Details];""",
+                              'Employees'  : """select * from [Employees];"""}
 
-# OPR MySQL tables --> ['source_table_1', 'source_table_2', ....] * if not needed, leave empty list
-OPR_to_ODS_tables_list_MySQL = ['products']
+# OPR MySQL tables --> {'source_table_1' : query, 'source_table_2' : query, ...} * if not needed, leave empty list
+OPR_to_ODS_tables_list_MySQL = {'products' : """select * from products"""}
 
 # OPR CSV --> {'target_table_1' : 'CSV_path', ...} * if not needed, leave empty dictionary
 OPR_to_ODS_tables_list_CSV = {'shippers': r"E:\קריירה\הכנה 2024\פרוייקטים\etl pipeline\app\sources\CSV\shippers.csv"}

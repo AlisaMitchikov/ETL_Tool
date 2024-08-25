@@ -128,6 +128,19 @@ drop table [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
 truncate table [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
 select * from [Northwind - DWH].[dbo].[ODS_Exchange_Rate];
 
+------------------------------------------------------------------
+
+-- [shippers]
+CREATE TABLE [Northwind - DWH].[dbo].[ODS_Shippers]
+(
+	[ShipperID] [int],
+	[CompanyName] [nvarchar](40),
+	[Phone] [nvarchar](24) 
+)
+;
+drop table [Northwind - DWH].[dbo].[ODS_Shippers];
+truncate table [Northwind - DWH].[dbo].[ODS_Shippers];
+select * from [Northwind - DWH].[dbo].[ODS_Shippers];
 
 ------------------------------------------------ STG ------------------------------------------------
 -----------------------------------------------------------------------------------------------------
@@ -158,7 +171,7 @@ drop table [Northwind - DWH].[dbo].[STG_Fact_Orders]
 select * from [Northwind - DWH].[dbo].[STG_Fact_Orders];
 truncate table [Northwind - DWH].[dbo].[STG_Fact_Orders];
 
-
+------------------------------------------------------------------
 
 --[Employees]
 CREATE TABLE [dbo].[STG_DIM_Employees]
@@ -187,6 +200,7 @@ drop table [Northwind - DWH].[dbo].[STG_DIM_Employees];
 truncate table [Northwind - DWH].[dbo].[STG_DIM_Employees];
 select * from [Northwind - DWH].[dbo].[STG_DIM_Employees];
 
+------------------------------------------------------------------
 
 -- [products]
  CREATE TABLE [dbo].[STG_DIM_Products](
@@ -206,6 +220,7 @@ drop table [Northwind - DWH].[dbo].[STG_DIM_Products];
 select * from [Northwind - DWH].[dbo].[STG_DIM_Products];
 truncate table [Northwind - DWH].[dbo].[STG_DIM_Products];
 
+------------------------------------------------------------------
 
 -- [Exchange Rate]
 CREATE TABLE [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate](
@@ -224,6 +239,20 @@ CREATE TABLE [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate](
 drop table [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate];
 truncate table [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate];
 select * from [Northwind - DWH].[dbo].[STG_DIM_Exchange_Rate];
+
+------------------------------------------------------------------
+
+-- [shippers]
+CREATE TABLE [Northwind - DWH].[dbo].[STG_DIM_Shippers]
+(
+	[ShipperID] [int],
+	[CompanyName] [nvarchar](40),
+	[Phone] [nvarchar](24) 
+)
+;
+drop table [Northwind - DWH].[dbo].[STG_DIM_Shippers];
+truncate table [Northwind - DWH].[dbo].[STG_DIM_Shippers];
+select * from [Northwind - DWH].[dbo].[STG_DIM_Shippers];
 
 
 ------------------------------------------------ DWH ------------------------------------------------
@@ -256,6 +285,7 @@ drop table [Northwind - DWH].[dbo].[DWH_Fact_Orders]
 select * from [Northwind - DWH].[dbo].[DWH_Fact_Orders];
 truncate table [Northwind - DWH].[dbo].[DWH_Fact_Orders];
 
+------------------------------------------------------------------
 
 --[Employees]
 CREATE TABLE [dbo].[DWH_DIM_Employees]
@@ -284,6 +314,7 @@ drop table [Northwind - DWH].[dbo].[DWH_DIM_Employees];
 truncate table [Northwind - DWH].[dbo].[DWH_DIM_Employees];
 select * from [Northwind - DWH].[dbo].[DWH_DIM_Employees];
 
+------------------------------------------------------------------
 
 -- [products]
 CREATE TABLE [dbo].[DWH_DIM_Products](
@@ -303,6 +334,7 @@ drop table [Northwind - DWH].[dbo].[DWH_DIM_Products];
 select * from [Northwind - DWH].[dbo].[DWH_DIM_Products];
 truncate table [Northwind - DWH].[dbo].[DWH_DIM_Products];
 
+------------------------------------------------------------------
 
 -- [Exchange Rate]
 CREATE TABLE [Northwind - DWH].[dbo].[DWH_DIM_Exchange_Rate](
@@ -322,6 +354,21 @@ drop table [Northwind - DWH].[dbo].[DWH_DIM_Exchange_Rate];
 truncate table [Northwind - DWH].[dbo].[DWH_DIM_Exchange_Rate];
 select * from [Northwind - DWH].[dbo].[DWH_DIM_Exchange_Rate];
 
+------------------------------------------------------------------
+
+-- [shippers]
+CREATE TABLE [Northwind - DWH].[dbo].[DWH_DIM_Shippers]
+(
+	[ShipperID] [int],
+	[CompanyName] [nvarchar](40),
+	[Phone] [nvarchar](24) 
+)
+;
+drop table [Northwind - DWH].[dbo].[DWH_DIM_Shippers];
+truncate table [Northwind - DWH].[dbo].[DWH_DIM_Shippers];
+select * from [Northwind - DWH].[dbo].[DWH_DIM_Shippers];
+
+------------------------------------------------------------------
 
 --[Employye Performance]
 CREATE TABLE [dbo].[DWH_Fact_Employee_Performance]

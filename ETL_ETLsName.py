@@ -6,7 +6,7 @@ from functions import ETL
 SQL_server_source_connect_details = {}
 
 # Source - MySQL --> {'host': '', 'user': '', 'password': '', 'database': ''}
-MySQL_source_connect_details = {'host': 'localhost', 'user': 'root', 'password': '', 'database': 'northwind - opr'}
+MySQL_source_connect_details = {}
 
 # Target - SQL Server --> {'DRIVER':'{}','SERVER': '', 'DATABASE': '', 'Trusted_Connection': ''}
 SQL_server_target_connect_details = {}
@@ -14,11 +14,11 @@ SQL_server_target_connect_details = {}
 
 # ------------------------------------------------------------------------ OPR to ODS ------------------------------------------------------------------------
 
-# OPR SQL Server tables --> ['source_table_1', 'source_table_2', ....] * if not needed, leave empty list
-OPR_to_ODS_tables_list_SQL = []
+# OPR SQL Server tables --> {'source_table_1' : query, 'source_table_2' : query, ...} * if not needed, leave empty list
+OPR_to_ODS_tables_list_SQL = {}
 
-# OPR MySQL tables --> ['source_table_1', 'source_table_2', ....] * if not needed, leave empty list
-OPR_to_ODS_tables_list_MySQL = []
+# OPR MySQL tables --> {'source_table_1' : query, 'source_table_2' : query, ...} * if not needed, leave empty list
+OPR_to_ODS_tables_list_MySQL = {}
 
 # OPR CSV --> {'target_table_1' : 'CSV_path', ...} * if not needed, leave empty dictionary
 OPR_to_ODS_tables_list_CSV = {}
