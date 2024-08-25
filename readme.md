@@ -11,7 +11,7 @@ enabling the creation of the objects in the data warehouse.
 
 ## How it works ?
 
-To set up your ETL process, begin by creating the ODS tables in the data warehouse with a schema that matches the source tables, using the standard naming convention: ODS_<table_name> (mandatory for tools functionality). Then, proceed to create the STG and DWH tables in the data warehouse also using the standard naming conventions (recommended).
+To set up your ETL process, begin by creating the ODS tables in the data warehouse with a schema that matches the source tables, using the standard naming convention: ODS_<table_name> (mandatory for tool's functionality). Then, proceed to create the STG and DWH tables in the data warehouse also using the standard naming conventions (recommended).
 
 Next, configure the `ETL_ETLs_name.py` file. 
 Start by defining the data sources, specifying the tables to be imported, and tailor the queries to selectively import only the data needed for delta loads. 
@@ -64,5 +64,6 @@ Target Tables (SQL Server data warehouse) :
 ## Note
 For your convenience, you can store your queries in the SQL Queries directory, 
 organized under your ETL’s name.
+For example, you can find the queries for the Employees_Performance model in this directory.
 
 Go and work your magic ! 🪄
