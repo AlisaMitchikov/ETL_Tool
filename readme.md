@@ -76,5 +76,5 @@ The `test_etl_tool.py` file includes unit tests for the ETL functions to verify 
 - OPR_to_ODS_API: Checks API data fetching and handles processing errors.
 
 Running the Tests :
-- Setup: Install dependencies using pip install -r requirements.txt.
-- Execute via terminal 'python -m unittest discover'
+- Setup: Install dependencies using 'pip install -r requirements.txt'.
+- Execute using 'python -m unittest discover'

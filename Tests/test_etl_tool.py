@@ -1,9 +1,6 @@
 import sys
 import os
-
-# Add the parent directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 import unittest
 from unittest.mock import patch, MagicMock
 from functions import OPR_to_ODS_SQL, OPR_to_ODS_MySQL, OPR_to_ODS_CSV,OPR_to_ODS_API,DWH
